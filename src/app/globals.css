@@ -7,8 +7,16 @@
       @apply flex items-center justify-center;
    }
 
+   .form_grid {
+      @apply grid grid-cols-3 grid-rows-2 auto-rows-max gap-2 gap-y-6;
+   }
+
+   .border_primary {
+      @apply border border-primary-color rounded-lg;
+   }
+
    .border_secondary {
-      @apply border border-secondary-color;
+      @apply border border-secondary-color rounded-lg;
    }
 }
 

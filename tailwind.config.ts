@@ -12,19 +12,24 @@ export default {
         'header': '352px',
       },
      backgroundColor: {
+      'bg-primary': '#FFFFFF',
       'bg-secondary': '#F9FAFB',
       'primary-button': '#7F56D9',
      },
      borderColor: {
+      'primary-color': '#D0D5DD',
       'secondary-color': '#F9FAFB',
       'primary-button-color': '#7F56D9',
      },
      textColor: {
       'header-color': '#101828',
       'primary-color': '#475467',
+      'secondary-color': '#344054',
+      'placeholder-color': '#6677085', 
+      'submit-color': '#6941C6',
      },
      boxShadow: { 
-      'button-shadow': '0px 1px 2px 0px #1018280D', 
+      'base-shadow': '0px 1px 2px 0px #1018280D', 
      },
     },
   },
