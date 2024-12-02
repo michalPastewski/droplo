@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { DataContextProvider } from './lib/dataContext';
 
 
 export const metadata: Metadata = {
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-neutral-100">
-        {children}
+        <DataContextProvider>
+          {children}
+        </DataContextProvider>
       </body>
     </html>
   );
