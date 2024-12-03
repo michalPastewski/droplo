@@ -1,12 +1,18 @@
 'use client'
-import { createContext, useState, ReactNode, Dispatch, SetStateAction } from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 
-interface MenuData { id: string; name: string; url: string; menus: MenuData[]; }
+interface MenuData { id: string; name: string; url: string; menus: MenuData[] };
 
 const initialState: MenuData[] = [
    {
       id: '001',
-      name: 'TEST MENU',
+      name: 'Test Mike Menu',
+      url: 'https://example/menu/mpastewski',
+      menus: []
+   },
+   {
+      id: '002',
+      name: 'Promocje',
       url: 'https://example/menu/mpastewski',
       menus: []
    }

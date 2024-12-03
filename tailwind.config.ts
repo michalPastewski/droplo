@@ -20,6 +20,7 @@ export default {
       'primary-color': '#D0D5DD',
       'secondary-color': '#F9FAFB',
       'primary-button-color': '#7F56D9',
+      'card-border-color': '#EAECF0',
      },
      textColor: {
       'header-color': '#101828',
