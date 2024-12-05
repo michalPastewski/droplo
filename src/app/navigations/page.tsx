@@ -1,18 +1,17 @@
 'use client'
-import { useContext } from 'react';
-import { DataContext } from '../lib/dataContext';
+import { useState } from 'react';
 import { NavigationMenu } from '../../ui/NavigationMenu';
-import { AddMenuForm } from '../ui/navigationForm/AddMenuForm';
 import { NavCards } from '../ui/navigationCards/NavCards';
+import { AddMenuForm } from '../ui/navigationForm/AddMenuForm';
 
 
 export default function NavigationsList() {
-  const {data, setData} = useContext(DataContext);
+  const [addMenu, setAddMenu] = useState(false);
 
    return (
        <main className="md:container md:mx-auto my-8 flex_center flex-col gap-4">
-        <NavigationMenu />
-        <AddMenuForm />
+        <NavigationMenu  isAddForm={setAddMenu} />
+        {addMenu && <AddMenuForm onClose={setAddMenu} />}
         <NavCards />
        </main>
    );

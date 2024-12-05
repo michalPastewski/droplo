@@ -1,32 +1,36 @@
-'use client'
-import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
+'use client';
 
+import { createContext, ReactNode, useContext, useReducer } from 'react';
+
+interface DataContextProps {data: MenuData[]; dispatch: React.Dispatch<Action> };
 interface MenuData { id: string; name: string; url: string; menus: MenuData[] };
+type Action = { type: 'ADD_MENU'; payload: MenuData } | { type: 'DELETE_MENU'; payload: string };
 
-const initialState: MenuData[] = [
-   {
-      id: '001',
-      name: 'Test Mike Menu',
-      url: 'https://example/menu/mpastewski',
-      menus: []
-   },
-   {
-      id: '002',
-      name: 'Promocje',
-      url: 'https://example/menu/mpastewski',
-      menus: []
-   }
-];
-
-interface DataContextProps {data: MenuData[]; setData: Dispatch<SetStateAction<MenuData[]>>;}
 const DataContext = createContext<DataContextProps | undefined>(undefined);
 
+const menuReducer = (data: MenuData[], action: Action): MenuData[] => {
+   switch (action.type) { 
+      case 'ADD_MENU': 
+         return [...data, action.payload];
+      case 'DELETE_MENU':
+         return data.filter(menu => menu.id !== action.payload);
+      default: 
+         throw new Error('Unhandled action type');
+   }
+};
+
 const DataContextProvider = ({children}: {children: ReactNode}) => {
-   const [data, setData] = useState<MenuData[]>(initialState);
+   const [data, dispatch] = useReducer(menuReducer, []);
 
    return (
-      <DataContext.Provider value={{data, setData}}>{children}</DataContext.Provider>
+      <DataContext.Provider value={{data, dispatch}}>{children}</DataContext.Provider>
    );
 };
 
-export { DataContext, DataContextProvider };
+const useMenus = () => { 
+   const context = useContext(DataContext);
+   if (!context) throw new Error('useMenu must be used within a MenuProvider');
+   return context;
+};
+
+export { useMenus, DataContextProvider };

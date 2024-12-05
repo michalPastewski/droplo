@@ -1,17 +1,16 @@
 'use client'
 
-import { useContext } from 'react';
-import { DataContext } from '../../lib/dataContext';
+import { useMenus } from '../../lib/dataContext';
 import { NavCard } from './NavCard';
 
 export const NavCards = () => {
-   const {data} = useContext(DataContext);
+  const {data} = useMenus();
 
-   return (
-     data.map((nav) => {
-       return (
-         <NavCard name={nav.name} key={nav.id} url={nav.url} />
-       )
-     })
-   )
-  }
+  return (
+    data.map((nav) => {
+      return (
+        <NavCard name={nav.name} key={nav.id} url={nav.url} />
+      )
+    })
+  )
+}
