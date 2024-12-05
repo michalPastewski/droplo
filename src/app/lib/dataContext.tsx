@@ -16,7 +16,7 @@ const menuReducer = (data: MenuData[], action: Action): MenuData[] => {
          return data.filter(menu => menu.id !== action.payload);
       default: 
          throw new Error('Unhandled action type');
-   }
+   };
 };
 
 const DataContextProvider = ({children}: {children: ReactNode}) => {
@@ -33,4 +33,4 @@ const useMenus = () => {
    return context;
 };
 
-export { useMenus, DataContextProvider };
+export { DataContextProvider, useMenus };

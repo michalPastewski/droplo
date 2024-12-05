@@ -6,7 +6,7 @@ interface FormButtonProps {
 };
 
 export const FormButton: React.FC<FormButtonProps> = ({ label, submit, type = 'button', onClick }) =>  {
-     const textColor = submit ? 'text-submit-color' : 'text-secondary-color';
+   const textColor = submit ? 'text-submit-color' : 'text-secondary-color';
 
    return (
       <button
@@ -17,4 +17,4 @@ export const FormButton: React.FC<FormButtonProps> = ({ label, submit, type = 'b
          {label}
       </button>
    )
-};
+}

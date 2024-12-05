@@ -3,7 +3,6 @@
 import { forwardRef} from 'react';
 import { IoSearchOutline } from "react-icons/io5";
 
-
 interface FormInputProps {label: string, placeholder: string, isIcon?: string};
 
 export const FormInput= forwardRef<HTMLInputElement, FormInputProps>(function FormInput(props, ref) {
@@ -37,4 +36,4 @@ export const FormInput= forwardRef<HTMLInputElement, FormInputProps>(function Fo
      </div>
    </div>
  )
-});
+})

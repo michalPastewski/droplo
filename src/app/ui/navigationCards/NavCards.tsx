@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useMenus } from '../../lib/dataContext';
 import { NavCard } from './NavCard';
@@ -9,7 +9,11 @@ export const NavCards = () => {
   return (
     data.map((nav) => {
       return (
-        <NavCard name={nav.name} key={nav.id} url={nav.url} />
+        <NavCard
+          name={nav.name}
+          key={nav.id}
+          url={nav.url}
+        />
       )
     })
   )
