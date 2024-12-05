@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { IoTrashOutline } from "react-icons/io5";
+import { z } from 'zod';
 import { useMenus } from '../../lib/dataContext';
 import { FormButton } from './FormButton';
 import { FormInput } from './FormInput';
@@ -9,20 +10,38 @@ import { FormInput } from './FormInput';
 interface AddMenuFormProps {
   onClose: (value: boolean) => void;
 }
+type Menu = z.infer<typeof menuSchema>;
+type FormattedError = { name?: { _errors: string[] }; url?: { _errors: string[] };};
+
+const menuSchema = z.object({
+  id: z.string(),
+  name: z.string().nonempty('Nazwa jest wymagana'),
+  url: z.string().url('Wprowadź poprawny adress url'),
+  menus: z.array(z.any()),
+});
 
 export const AddMenuForm: React.FC<AddMenuFormProps> = ({onClose}) => {
   const { dispatch } = useMenus();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const urlInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newMenu = {
+    const newMenu: Menu = {
       id: new Date().valueOf().toString(),
       name: nameInputRef.current!.value,
       url: urlInputRef.current!.value,
       menus: []
+    }
+
+    const result = menuSchema.safeParse(newMenu);
+
+    if (!result.success) {
+      const formatted: FormattedError  = result.error.format();
+      setErrorMessage(formatted.name?._errors[0] || formatted.url?._errors[0]);
+      return;
     }
 
     dispatch({type: 'ADD_MENU', payload: newMenu});
@@ -60,6 +79,7 @@ export const AddMenuForm: React.FC<AddMenuFormProps> = ({onClose}) => {
       <section className="col-span-1 row-span-1 flex gap-2">
         <FormButton label='Anuluj' onClick={(e)=> handleClose(e)} type="button" />
         <FormButton label='Dodaj' submit='true' type="submit" />
+        <div>{errorMessage}</div>
       </section>
     </form>
   )
