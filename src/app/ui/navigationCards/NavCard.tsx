@@ -1,30 +1,30 @@
-import { LiaArrowsAltSolid } from "react-icons/lia";
-import { NavCardButton } from './NavCardButton';
+import { useState } from 'react';
+import { NestedMenuData } from '../../lib/dataContext';
+import { AddMenuForm } from '../navigationForm/AddMenuForm';
+import { NavCardBody } from './NavCardBody';
 import { NavCardFooter } from './NavCardFooter';
 
 interface NavCardProps {
-   name: string;
-   url: string;
+  menusData: NestedMenuData[];
 }
 
-export const NavCard: React.FC<NavCardProps> = ({name, url}) => {
- return (
-   <section className='container mx-auto border_primary'>
-       <div className='w-full flex items-center justify-between py-4 px-6 gap-1 bg-bg-primary border-b border-card-border-color rounded-t-lg w-full'>
-        <div className="flex">
-          <LiaArrowsAltSolid className='size-10 p-2.5 rounded-lg'/>
-          <div>
-            <h2 className='text-sm font-semibold text-header-color'>{name}</h2>
-            <p className='text-sm font-normal text-primary-color'>{url}</p>
-          </div>
-        </div>
-         <div className='border_primary shadow-base-shadow justify-end'>
-           <NavCardButton label="Usuń" border />
-           <NavCardButton label="Edytuj" border />
-           <NavCardButton label="Dodaj pozycję menu" />
-         </div>
-       </div>
-      <NavCardFooter />
-   </section>
- )
-}
+export const NavCard: React.FC<NavCardProps> = ({ menusData }) => {
+  const [addMenu, setAddMenu] = useState(false);
+
+  return (
+    <article className="container mx-auto border_primary">
+      <section className="bg-bg-secondary rounded-t-lg">
+        {menusData.map((menu) => {
+          return <NavCardBody menuData={menu} key={menu.menuId} borderTop />;
+        })}
+      </section>
+
+      {addMenu && (
+        <section className="w-full py-4 px-6 border-b bg-bg-secondary">
+          <AddMenuForm onClose={setAddMenu} />
+        </section>
+      )}
+      <NavCardFooter handleOpenForm={setAddMenu} />
+    </article>
+  );
+};

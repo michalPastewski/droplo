@@ -4,17 +4,11 @@ import { useMenus } from '../../lib/dataContext';
 import { NavCard } from './NavCard';
 
 export const NavCards = () => {
-  const {data} = useMenus();
+  const { data } = useMenus();
 
-  return (
-    data.map((nav) => {
-      return (
-        <NavCard
-          name={nav.name}
-          key={nav.id}
-          url={nav.url}
-        />
-      )
-    })
-  )
-}
+  return data.map((nav) => {
+    const { data, id } = nav;
+    console.log('CARDS CARDS', data, id);
+    return <NavCard menusData={data} id={id} key={id} />;
+  });
+};
