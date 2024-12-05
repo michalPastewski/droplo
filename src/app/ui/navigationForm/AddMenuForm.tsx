@@ -79,7 +79,9 @@ export const AddMenuForm: React.FC<AddMenuFormProps> = ({onClose}) => {
       <section className="col-span-1 row-span-1 flex gap-2">
         <FormButton label='Anuluj' onClick={(e)=> handleClose(e)} type="button" />
         <FormButton label='Dodaj' submit='true' type="submit" />
-        <div>{errorMessage}</div>
+        { errorMessage &&
+           <div className='w-1/2 border border-rose-500 rounded-lg px-4 py-2 ml-10 text-center bg-rose-100 text-rose-800 font-semibold text-sm'>{errorMessage}</div>
+        }
       </section>
     </form>
   )
