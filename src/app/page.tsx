@@ -1,7 +1,7 @@
 import Link from 'next/link';
 export default function Home() {
   return (
-      <main>
+      <main className='flex_center flex-col py-12 px-12 gap-4 text-lg'>
         HELLO DROPLO
         <section>
           <p>Cześć, jeśli tu jesteś to świetnie. Któś przynajmniej zerknie na ten cod a to ju coś.</p>
@@ -13,7 +13,7 @@ export default function Home() {
           <p>Niemniej będzie mi miło jeśli zerkniesz na kod i stwierdzisz ze jest całkiem spoko (oby)</p>
           <p>Było mi bardzo miło! Być moze do zobaczenia na kolejnej rekrutacji. Liczę na jakieś fajne zadanko :D</p>
         </section>
-        <Link href="/navigations">here</Link>
+        <Link href="/navigations" className='border_primary bg-blue-100 py-4 px-5 w-1/2 text-center text-blue-800'>Przejdź do zadania</Link>
       </main>
   );
 }
