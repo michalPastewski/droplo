@@ -25,4 +25,15 @@ export interface MenuData {
    payload: { parentId: string; newMenu: MenuData };
  }
  
- export type Action = AddMenuAction | { type: 'DELETE_MENU'; payload: string };
+ export type Action = AddMenuAction | { type: 'DELETE_MENU'; payload: string } | { type: 'UPDATE_MENU'; payload: {id: string, updateMenu: {name: string, url: string} };
+
+ // Navigation Cards
+ export interface NavCardBodyProps {
+  menuData: {
+    menuId: string;
+    name: string;
+    url?: string;
+    menus: NestedMenuData[];
+  };
+  borderTop?: boolean;
+}

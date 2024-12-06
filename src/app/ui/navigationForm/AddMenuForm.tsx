@@ -4,11 +4,18 @@ import { useRef, useState } from 'react';
 import { IoTrashOutline } from 'react-icons/io5';
 import { z } from 'zod';
 import { useMenus } from '../../lib/dataContext';
+import { NestedMenuData } from '../../lib/typeDefinition';
 import { FormButton } from './FormButton';
 import { FormInput } from './FormInput';
 
 interface AddMenuFormProps {
   onClose: (value: boolean) => void;
+  editData?: {
+    menuId: string;
+    name: string;
+    url?: string;
+    menus: NestedMenuData[];
+  };
 }
 type Menu = z.infer<typeof menuSchema>;
 
@@ -21,17 +28,23 @@ const nestedMenuSchema = z.object({
 
 const menuSchema = z.object({
   id: z.string(),
-  data: z.array(z.object({
-    parentId: z.string(),
-    data: nestedMenuSchema,
-  })),
+  data: z.array(
+    z.object({
+      parentId: z.string(),
+      data: nestedMenuSchema,
+    })
+  ),
 });
 
-export const AddMenuForm: React.FC<AddMenuFormProps> = ({ onClose }) => {
-  const { dispatch, data } = useMenus();
+export const AddMenuForm: React.FC<AddMenuFormProps> = ({
+  onClose,
+  editData,
+}) => {
+  const { dispatch } = useMenus();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const urlInputRef = useRef<HTMLInputElement>(null);
+  let values = editData ? editData : null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,15 +53,17 @@ export const AddMenuForm: React.FC<AddMenuFormProps> = ({ onClose }) => {
 
     const newMenu: Menu = {
       id: parentId,
-      data: [{
-        parentId: parentId,
-        data: {
-          menuId: new Date().valueOf().toString(),
-          name: nameInputRef.current!.value,
-          url: urlInputRef.current!.value,
-          menus: [],
+      data: [
+        {
+          parentId: parentId,
+          data: {
+            menuId: new Date().valueOf().toString(),
+            name: nameInputRef.current!.value,
+            url: urlInputRef.current!.value,
+            menus: [],
+          },
         },
-      }],
+      ],
     };
 
     const result = menuSchema.safeParse(newMenu);
@@ -75,6 +90,18 @@ export const AddMenuForm: React.FC<AddMenuFormProps> = ({ onClose }) => {
     onClose(false);
   };
 
+  const handleUpdate = (e: React.FormEvent, id = values?.menuId) => {
+    e.preventDefault();
+
+    const updateMenu = {
+      name: nameInputRef.current!.value,
+      url: urlInputRef.current!.value,
+    };
+
+    dispatch({ type: 'UPDATE_MENU', payload: { id, updateMenu } });
+    onClose(false);
+  };
+
   const handleDelete = (id: string) => {
     if (id) dispatch({ type: 'DELETE_MENU', payload: id });
     onClose(false);
@@ -82,7 +109,11 @@ export const AddMenuForm: React.FC<AddMenuFormProps> = ({ onClose }) => {
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={
+        editData
+          ?  handleUpdate
+          : handleSubmit
+      }
       className="container mx-auto py-5 px-6 form_grid border_primary bg-bg-primary"
       style={{
         gridTemplateColumns: '1fr auto 40px',
@@ -92,12 +123,14 @@ export const AddMenuForm: React.FC<AddMenuFormProps> = ({ onClose }) => {
         <FormInput
           label="Nazwa"
           placeholder="np. Promocja"
+          defaultValue={values ? values.name : null}
           ref={nameInputRef}
         />
         <FormInput
           label="Link"
           placeholder="Wklej lub wyszukaj"
           isIcon="true"
+          defaultValue={values ? values.url : null}
           ref={urlInputRef}
         />
       </section>
