@@ -31,7 +31,7 @@ export const NavCardBody: React.FC<NavCardBodyProps> = ({
           <LiaArrowsAltSolid className="size-10 p-2.5 rounded-lg" />
           <div>
             <h3 className="text-sm font-semibold text-header-color">{name}</h3>
-            <p className="text-sm font-normal text-primary-color">{url}</p>
+            <a href={url} className="text-sm font-normal text-primary-color">{url}</a>
           </div>
         </div>
         <div className="border_primary shadow-base-shadow justify-end">

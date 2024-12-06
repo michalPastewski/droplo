@@ -8,18 +8,9 @@ export const initialData: MenuData[] = [
          parentId: '1',
          data: {
            menuId: '11',
-           name: 'Main Menu',
-           url: 'https://example.com',
+           name: 'Michał Pastewski',
+           url: 'https://www.linkedin.com/in/michal-pastewski/?locale=en_US',
            menus: [
-             {
-               parentId: '11',
-               data: {
-                 menuId: '112',
-                 name: 'Sub Menu 1',
-                 url: 'https://example.com/sub1',
-                 menus: [],
-               },
-             },
              {
                parentId: '11',
                data: {
@@ -53,18 +44,5 @@ export const initialData: MenuData[] = [
        },
      ],
    },
-   {
-     id: '2',
-     data: [
-       {
-         parentId: '2',
-         data: {
-           menuId: '22',
-           name: 'NOT Main Menu',
-           url: 'https://example.com',
-           menus: [],
-         },
-       },
-     ],
-   },
+   
  ];
